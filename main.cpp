@@ -1,47 +1,48 @@
 #include <iostream>
+#include <vector>
 #include "Component.h"
 
 using namespace std;
 
 int main(int argc, char* argv[])
 {
-    cout << argv[] << endl;
+    // cout << argv[] << endl;
     int cycles, writes, volt;
     double iterations;
-    for (int i{0}; i < argc; i++;)
+    for (int i{0}; i < argc; i++)
     {
 	if (i == 1)
 	{
-	    cycles = argv[i];
+	    cycles = *((int*)(&argv[i]));
 	}
 	else if (i == 2)
 	{
-	    iterations = argv[i];
+	    iterations = *((double*)(&argv[i]));
 	}
 	else if (i == 3)
 	{
-	    volts = argv[i];
+	    volt = *((int*)(&argv[i]));
 	}
 	else if (i == 4)
 	{
-	    writes = argv[i];
+	    writes = *((int*)(&argv[i]));
 	}
 	else 
 	{
-	    cout << arg[i] << " Is not defined." << endl;
+	    cout << argv[i] << " Is not defined." << endl;
 	    break;
 	}
     }
     
-    
+
   Connection p, n;
   vector<Component*> net;
-  net.push_back(new Battery("Bat", 24.0, p, n));
-  net.push_back(new Resistor("R1", 6.0, p, n));
-  net.push_back(new Resistor("R2", 8.0, p, n));
-  net.push_back(new Capacitor("C1", 0.0047, p , n));
+  //net.push_back(new Battery("Bat", 24.0, p, n));
+  //net.push_back(new Resistor("R1", 6.0, p, n));
+  //net.push_back(new Resistor("R2", 8.0, p, n));
+  //net.push_back(new Capacitor("C1", 0.0047, p , n));
   //simulate(net, cycles, volt, writes);
-    
+  
     
     
     return 0;
