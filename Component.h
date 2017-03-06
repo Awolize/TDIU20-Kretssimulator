@@ -21,8 +21,8 @@ protected:
     Connection &b;
     std::string name;
 public:
-    Component(Connection & c1, Connection & c2, std::string const & n) 
-	: a{ c1 }, b{ c2 }, name{ n } {};
+    Component(std::string const & new_name, Connection & n, Connection & p) 
+	:  name{ new_name }, a{ n }, b{ p } {};
     std::string get_name() const;
     virtual ~Component() = default;
 };
@@ -30,8 +30,8 @@ public:
 class Resistor : public Component
 {
 public:
-    Resistor(int resistance, Connection &c1, Connection &c2, std::string name) 
-	: Component{ c1, c2, name }, resistance{ resistance } {};
+    Resistor(std::string name, int resistance, Connection & n, Connection & p) 
+	: Component{ name, n, p }, resistance{ resistance } {};
     double get_current() const override;
 private:
     int resistance;
@@ -40,9 +40,10 @@ private:
 class Capacitor : public Component
 {
 public:
-    Capacitor(double farad, Connection &c1, Connection &c2, std::string name) 
-	: Component{ c1, c2, name } {};
-    double get_farad{ farad } {};
+    Capacitor( std::string name, double farad, Connection & n, Connection & p) 
+	: Component{ name, n, p } {};
+    double get_farad() { return farad; };
+    double get_current() const override;
 private:
     double farad;
 };
@@ -50,8 +51,9 @@ private:
 class Battery : public Component
 {
 public:
-    Battery(double voltage, Connection &c1, Connection &c2, std::string name) 
-	: Component{ c1, c2, name }, voltage{ voltage } {};
+    Battery(std::string name, double voltage, Connection & n, Connection & p) 
+	: Component{ name, n, p }, voltage{ voltage } {};
+    double get_current() const override;
 private:
     double voltage;
 };

@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
     // cout << argv[] << endl;
     int cycles, writes, volt;
     double iterations;
-    for (int i{0}; i < argc; i++)
+    for (int i{1}; i < argc; i++)
     {
 	if (i == 1)
 	{
@@ -37,10 +37,10 @@ int main(int argc, char* argv[])
 
   Connection p, n;
   vector<Component*> net;
-  //net.push_back(new Battery("Bat", 24.0, p, n));
-  //net.push_back(new Resistor("R1", 6.0, p, n));
-  //net.push_back(new Resistor("R2", 8.0, p, n));
-  //net.push_back(new Capacitor("C1", 0.0047, p , n));
+//  net.push_back(new Battery("Bat", 24.0, p, n));
+  net.push_back(new Resistor("R1", 6.0, p, n));
+  net.push_back(new Resistor("R2", 8.0, p, n));
+  net.push_back(new Capacitor("C1", 0.0047, p , n));
   //simulate(net, cycles, volt, writes);
   
     

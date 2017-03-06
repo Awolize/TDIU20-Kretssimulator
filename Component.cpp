@@ -16,7 +16,18 @@ std::string Component::get_name() const
 
 double Resistor::get_current() const
 {
-    return 0.0;
+    return 0;
 }
+
+double Capacitor::get_current() const
+{
+    return 0;
+}
+
+double Battery::get_current() const
+{
+    return 0;
+}
+
 
 
