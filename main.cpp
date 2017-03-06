@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "Component.h"
+#include <stdlib.h>
 
 using namespace std;
 
@@ -15,22 +16,23 @@ int main(int argc, char* argv[])
     {
 	if (i == 1)
 	{
-	    cycles = *((int*)(&argv[i]));
+	    cycles = atoi(argv[i]);
 	    cout << "arg 1: " << cycles << endl;
 	}
 	else if (i == 2)
 	{
-	    iterations = (stod)argv[i];
+//	    sscanf(argv[i],"%lf",&iterations); 
+	    iterations = atof(argv[i]);
 	    cout << "arg 2: " << iterations << endl;
 	}
 	else if (i == 3)
 	{
-	    volt = *((int*)(&argv[i]));
+	    volt = atoi(argv[i]);
 	    cout << "arg 3: " << volt << endl;
 	}
 	else if (i == 4)
 	{
-	    writes = *((int*)(&argv[i]));
+	    writes = atoi(argv[i]);
 	    cout << "arg 4: " << writes << endl;
 	}
 	else 
