@@ -2,7 +2,6 @@
 #define COMPONENT_H
 
 #include <iostream>
-#include "stdafx.h"
 #include <vector>
 
 class Connection

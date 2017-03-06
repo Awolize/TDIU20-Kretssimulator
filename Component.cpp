@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Component.h"
 
 double Component::get_voltage() const
