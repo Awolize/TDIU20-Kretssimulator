@@ -1,7 +1,7 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-#include <iostream>
+#include <iostream> 
 #include <vector>
 
 class Connection
