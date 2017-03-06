@@ -1,4 +1,6 @@
 #include "Component.h"
+#include <iostream>
+#include <vector>
 
 double Component::get_voltage() const
 {

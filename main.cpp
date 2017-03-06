@@ -34,15 +34,16 @@ int main(int argc, char* argv[])
 	}
     }
     
-
-  Connection p, n;
-  vector<Component*> net;
-//  net.push_back(new Battery("Bat", 24.0, p, n));
-  net.push_back(new Resistor("R1", 6.0, p, n));
-  net.push_back(new Resistor("R2", 8.0, p, n));
-  net.push_back(new Capacitor("C1", 0.0047, p , n));
-  //simulate(net, cycles, volt, writes);
-  
+    
+    Connection p, n, q, q1, q2;
+    vector<Component*> net;
+    net.push_back(new Battery("Bat", 24.0, p, n));
+    net.push_back(new Resistor("R1", 6.0, p, q));
+    net.push_back(new Resistor("R2", 8.0, q, q1));
+    net.push_back(new Resistor("R2", 8.0, q1, q2));
+    net.push_back(new Capacitor("C1", 0.0047, q2 , n));
+//  simulate(net, cycles, volt, writes);
+    
     
     
     return 0;
@@ -59,8 +60,13 @@ int main(int argc, char* argv[])
   net.push_back(new Resistor("R2", 8.0, p, n));
   simulate(net, 10000, 10, 0.1);
 
+bat
 
+r r
 
+c
+
+-> bat
 
 Bat. -> .R1. -> .bat
    . -> .R2. -> . 
