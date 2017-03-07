@@ -11,7 +11,9 @@ int main(int argc, char* argv[])
     int cycles, writes, volt;
     double iterations;
     if (argc != 5)
+    {
 	throw std::invalid_argument("Invalid amount of input arguments.");
+    }
     for (int i{1}; i < argc; i++)
     {
 	if (i == 1)
@@ -19,18 +21,18 @@ int main(int argc, char* argv[])
 	    cycles = atoi(argv[i]);
 	    cout << "arg 1: " << cycles << endl;
 	}
-	else if (i == 2)
+	else if (i == 3)
 	{
 //	    sscanf(argv[i],"%lf",&iterations); 
 	    iterations = atof(argv[i]);
 	    cout << "arg 2: " << iterations << endl;
 	}
-	else if (i == 3)
+	else if (i == 4)
 	{
 	    volt = atoi(argv[i]);
 	    cout << "arg 3: " << volt << endl;
 	}
-	else if (i == 4)
+	else if (i == 2)
 	{
 	    writes = atoi(argv[i]);
 	    cout << "arg 4: " << writes << endl;
@@ -42,14 +44,15 @@ int main(int argc, char* argv[])
 	}
     }
     
-    Connection p, n, q, q1, q2;
-    vector<Component*> net;
+    Connection p, n, Q124, Q23;
+    vector<Component*> net; 
     net.push_back(new Battery("Bat", volt, p, n));
-    net.push_back(new Resistor("R1", 6.0, p, q));
-    net.push_back(new Resistor("R2", 8.0, q, q1));
-    net.push_back(new Resistor("R2", 8.0, q1, q2));
-    net.push_back(new Capacitor("C1", 0.0047, q2 , n));
-//  simulate(net, cycles, volt, writes);
+    net.push_back(new Resistor("R1", 6.0, p, Q124));
+    net.push_back(new Resistor("R2", 8.0, Q124, Q23));
+    net.push_back(new Resistor("R3", 8.0, Q23, n));
+    net.push_back(new Resistor("R4", 8.0, Q124, n));
+    //net.push_back(new Capacitor("C1",1 , q2 , n));
+    simulate(net, cycles, volt, writes);
 
 
     cout << "\n\nPress \"Enter\" to continue...";
