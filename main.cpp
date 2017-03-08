@@ -46,17 +46,15 @@ int main(int argc, char* argv[])
     
     Connection p, n, Q124, Q23;
     vector<Component*> net; 
-    net.push_back(new Battery("Bat", volt, p, n));
+    net.push_back(new Battery("Bat", volt, n, p));
     net.push_back(new Resistor("R1", 6.0, p, Q124));
-    net.push_back(new Resistor("R2", 8.0, Q124, Q23));
+    net.push_back(new Resistor("R2", 4.0, Q124, Q23));
     net.push_back(new Resistor("R3", 8.0, Q23, n));
-    net.push_back(new Resistor("R4", 8.0, Q124, n));
+    net.push_back(new Resistor("R4", 12.0, Q124, n));
     //net.push_back(new Capacitor("C1",1 , q2 , n));
-    simulate(net, cycles, volt, writes);
+    simulate(net, cycles, writes, iterations);
 
 
-    cout << "\n\nPress \"Enter\" to continue...";
-    std::cin.get();
     return 0;
 }
 

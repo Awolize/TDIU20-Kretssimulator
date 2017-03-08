@@ -22,11 +22,15 @@ void simulate(vector<Component*> net,int cycles, int writes, double time)
     {
 	cout << setw(12) << "Volt Curr" ;
     } 
-    cout << endl;
+    cout << endl << "     ";
     for (int j{0}; j < writes; j++){
 	for( int i{0}; i < net.size();i++)
 	{
 	    net.at(i)->simulate(time);
+	}
+	for( int i{0}; i < net.size();i++)
+	{
+  	    cout << net.at(i)->get_voltage() << "   " << net.at(i)->get_current() << "     ";
 	}
 	cout << endl;
     }
@@ -37,38 +41,53 @@ std::string Component::get_name() const
     return std::string();
 }
 
-double Resistor::get_current(Connection & a, Connection & b, double time) const
+double Resistor::get_current() const
 {
-    double current{0},diffrence{0};
-    current = a.charge/resistance; 
-    diffrence = a.charge-b.charge;
-    b.charge = time * diffrence/resistance;
     return current;  
 }
 
-double Capacitor::get_current(Connection & a, Connection & b, double time) const
+double Capacitor::get_current() const
 {
-    return (a.charge-b.charge)*farad;
+    return current;
 }
 
-double Battery::get_current(Connection & a, Connection & b, double time) const
+double Battery::get_current() const
 {
-    a.charge = voltage;
-    b.charge = 0;
-    return 0.0;
+    return current;
 }
 
-void Battery::simulate(double time) const
+double Resistor::get_voltage() const
 {
-    cout << setw(6) << setprecision(2) <<voltage << setw(6) << get_current(a,b,time);
+    return voltage;  
 }
 
-void Resistor::simulate(double time) const
+double Capacitor::get_voltage() const
 {
-    cout << setw(6) << setprecision(2) <<  b.charge << setw(6) << get_current(a,b,time);
+    return voltage;
 }
 
-void Capacitor::simulate(double time) const
+double Battery::get_voltage() const
 {
-    cout << setw(6) << setprecision(2) << b.charge << setw(6) << get_current(a,b,time);
+    return voltage;
+}
+
+void Battery::simulate(double time) 
+{
+    a.charge = 0;
+    b.charge = voltage;
+}
+
+void Resistor::simulate(double time) 
+{
+    double diffrence{0};
+    diffrence = a.charge-b.charge;
+    current = diffrence/resistance; 
+    voltage = time * current;
+    b.charge = diffrence-voltage;
+    voltage = b.charge;
+}
+
+void Capacitor::simulate(double time) 
+{
+    
 }
