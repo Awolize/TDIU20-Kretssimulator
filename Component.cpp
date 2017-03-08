@@ -12,6 +12,9 @@ double Component::get_voltage() const
 
 void simulate(vector<Component*> net,int cycles, int writes, double time)
 {
+    
+
+
     for ( int i{0}; i < net.size(); i++)
     {
 	cout << setw(12) << setfill(' ') << net.at(i)->name;
@@ -22,15 +25,29 @@ void simulate(vector<Component*> net,int cycles, int writes, double time)
     {
 	cout << setw(12) << "Volt Curr" ;
     } 
-    cout << endl << "     ";
-    for (int j{0}; j < writes; j++){
-	for( int i{0}; i < net.size();i++)
+    cout << endl;
+    for (int j{0}; j < cycles; j++)
+    {
+        for( int i{0}; i < net.size();i++)
 	{
 	    net.at(i)->simulate(time);
 	}
+    }
+    for (int j{0}; j < writes; j++)
+    { 
+	cout << "  ";
 	for( int i{0}; i < net.size();i++)
 	{
-  	    cout << net.at(i)->get_voltage() << "   " << net.at(i)->get_current() << "     ";
+	    cout << setw(4) << fixed << setprecision(2) << net.at(i)->get_voltage() << " ";
+	    cout << setw(4) << fixed << setprecision(2) << net.at(i)->get_current() << "  ";
+
+	    if (i+1 != net.size())
+	    {
+		if (net.at(i+1)->get_voltage() < 10)
+		{
+		    cout << " ";
+		}
+	    }
 	}
 	cout << endl;
     }
@@ -43,7 +60,7 @@ std::string Component::get_name() const
 
 double Resistor::get_current() const
 {
-    return current;  
+    return ((a.charge - b.charge) / resistance);  
 }
 
 double Capacitor::get_current() const
@@ -58,7 +75,7 @@ double Battery::get_current() const
 
 double Resistor::get_voltage() const
 {
-    return voltage;  
+    return (a.charge - b.charge); 
 }
 
 double Capacitor::get_voltage() const
@@ -79,12 +96,8 @@ void Battery::simulate(double time)
 
 void Resistor::simulate(double time) 
 {
-    double diffrence{0};
-    diffrence = a.charge-b.charge;
-    current = diffrence/resistance; 
-    voltage = time * current;
-    b.charge = diffrence-voltage;
-    voltage = b.charge;
+    b.charge = (time * ((a.charge-b.charge)/resistance));
+    a.charge = (a.charge - b.charge);
 }
 
 void Capacitor::simulate(double time) 

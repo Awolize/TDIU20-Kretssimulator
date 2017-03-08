@@ -28,6 +28,19 @@ public:
 };
 
 
+class Battery : public Component
+{
+public:
+    Battery(std::string name, double voltage, Connection & n, Connection & p) 
+	: Component{ name, n, p }, voltage{ voltage } {};
+    double get_current() const override;
+    double get_voltage() const override;
+    void simulate(double)  override;
+private:
+    double voltage, current;
+};
+
+
 class Resistor : public Component
 {
 public:
@@ -51,19 +64,6 @@ public:
     void simulate(double) override;
 private:
     double farad,voltage,current;
-};
-
-
-class Battery : public Component
-{
-public:
-    Battery(std::string name, double voltage, Connection & n, Connection & p) 
-	: Component{ name, n, p }, voltage{ voltage } {};
-    double get_current() const override;
-    double get_voltage() const override;
-    void simulate(double)  override;
-private:
-    double voltage,current;
 };
 
 void simulate(std::vector<Component*> net,int cycles, int writes, double time);
