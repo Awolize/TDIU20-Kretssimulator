@@ -31,9 +31,9 @@ void simulate(vector<Component*> net,int cycles, int writes, double time)
 	{
 	    for (int j{0}; j < cycles/writes; j++)
 	    {
-		for( int i{0}; i < net.size();i++)
+		for( int k{0}; k < net.size();k++)
 		{
-		    net.at(i)->simulate(time);
+		    net.at(k)->simulate(time);
 		}
 	    }
 	    cout << setw(4) << fixed << setprecision(2) << net.at(i)->get_voltage() << " ";
