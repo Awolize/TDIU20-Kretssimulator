@@ -37,7 +37,7 @@ public:
     double get_voltage() const override;
     void simulate(double)  override;
 private:
-    double voltage, current;
+    double voltage;
 };
 
 
@@ -50,7 +50,7 @@ public:
     double get_voltage() const override;
     void simulate(double) override;
 private:
-    double resistance, voltage, current;
+    double resistance;
 };
 
 

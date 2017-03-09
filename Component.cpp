@@ -23,32 +23,24 @@ void simulate(vector<Component*> net,int cycles, int writes, double time)
 	cout << setw(12) << "Volt Curr" ;
     } 
     cout << endl;
-   
-    for (int j{0}; j < writes; j++)
+
+    for (int a{0}; a < writes; a++)
     { 
 	cout << "  ";
-	for( int i{0}; i < net.size();i++)
+	for (int c{0}; c < cycles/writes; c++)
 	{
-	    for (int j{0}; j < cycles/writes; j++)
+	    for( int d{0}; d < net.size(); d++)
 	    {
-		for( int k{0}; k < net.size();k++)
-		{
-		    net.at(k)->simulate(time);
-		}
-	    }
-	    cout << setw(4) << fixed << setprecision(2) << net.at(i)->get_voltage() << " ";
-	    cout << setw(4) << fixed << setprecision(2) << net.at(i)->get_current() << "  ";
-	    if (i+1 != net.size())
-	    {
-		if (net.at(i+1)->get_voltage() < 10)
-		{
-		    cout << " ";
-		}
+		net.at(d)->simulate(time);
 	    }
 	}
-	cout << endl;
-    }
+	for (int b{0}; b < net.size(); b++)
+	{
+	    cout << setw(5) << fixed << setprecision(2) << net.at(b)->get_voltage() << " ";
+	    cout << setw(4) << fixed << setprecision(2) << net.at(b)->get_current() << "  ";
+	}
     cout << endl;
+    }
 }
 
 std::string Component::get_name() const
@@ -68,7 +60,7 @@ double Capacitor::get_current() const
 
 double Battery::get_current() const
 {
-    return current;
+    return 0;
 }
 
 double Resistor::get_voltage() const

@@ -33,13 +33,14 @@ int main(int argc, char* argv[])
     net.push_back(new Resistor("R2", 4.0, Q124, Q23));
     net.push_back(new Resistor("R3", 8.0, Q23, n));
     net.push_back(new Resistor("R4", 12.0, Q124, n));
-    cout << "Krets 1: " << endl;
+    cout << "  Krets 1: " << endl;
     simulate(net, cycles, writes, iterations);
-    cout << "---------------------------------" << endl;
-    cout << "|    Communism will prevail!    |" << endl;
-    cout << "---------------------------------" << endl;
+    cout << "  ---------------------------------" << endl;
+    cout << "  |    Communism will prevail!    |" << endl;
+    cout << "  ---------------------------------" << endl;
     net.clear();
-
+    cout << "  ______________________________________________________________________";
+    cout << endl;
     Connection n1,p1,l,r;
     net.push_back(new Battery("Bat", volt, n1, p1));
     net.push_back(new Resistor("R1", 150.0, p1, l));
@@ -47,29 +48,19 @@ int main(int argc, char* argv[])
     net.push_back(new Resistor("R3", 100.0, r, l));
     net.push_back(new Resistor("R4", 300.0, l, n1));
     net.push_back(new Resistor("R5", 250.0, r, n1));
-    cout << "Krets 2: " << endl;
+    cout << "  Krets 2: " << endl;
     simulate(net, cycles, writes, iterations);
     net.clear();
-
+    cout << "  ______________________________________________________________________";
+    cout << endl;
     Connection n2,p2,l1,r1;
     net.push_back(new Battery("Bat", volt, n2, p2));
     net.push_back(new Resistor("R1", 150.0, p2, l1));
     net.push_back(new Resistor("R2", 50.0, p2, r1));
     net.push_back(new Capacitor("C3", 1.0, r1, l1));
     net.push_back(new Resistor("R4", 300.0, l1, n2));
-    net.push_back(new Resistor("C5", .5, r1, n2));
-    cout << "Krets 3: " << endl;
+    net.push_back(new Capacitor("C5", 0.5, r1, n2));
+    cout << "  Krets 3: " << endl;
     simulate(net, cycles, writes, iterations);
     return 0;
 }
-
-/*
-  Ett exempel: två parallellkopplade resistorer kan byggas upp och simuleras
-
-  Connection p, n;
-  vector<Component*> net;
-  net.push_back(new Battery("Bat", 24.0, p, n));
-  net.push_back(new Resistor("R1", 6.0, p, n));
-  net.push_back(new Resistor("R2", 8.0, p, n));
-  simulate(net, 10000, 10, 0.1);
-*/
