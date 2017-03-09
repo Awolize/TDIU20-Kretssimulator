@@ -63,7 +63,7 @@ public:
     double get_voltage() const override;
     void simulate(double) override;
 private:
-    double farad,voltage,current;
+    double farad{0},voltage{0},current{0};
 };
 
 void simulate(std::vector<Component*> net,int cycles, int writes, double time);

@@ -23,21 +23,21 @@ void simulate(vector<Component*> net,int cycles, int writes, double time)
 	cout << setw(12) << "Volt Curr" ;
     } 
     cout << endl;
-    for (int j{0}; j < cycles; j++)
-    {
-        for( int i{0}; i < net.size();i++)
-	{
-	    net.at(i)->simulate(time);
-	}
-    }
+   
     for (int j{0}; j < writes; j++)
     { 
 	cout << "  ";
 	for( int i{0}; i < net.size();i++)
 	{
+	    for (int j{0}; j < cycles/writes; j++)
+	    {
+		for( int i{0}; i < net.size();i++)
+		{
+		    net.at(i)->simulate(time);
+		}
+	    }
 	    cout << setw(4) << fixed << setprecision(2) << net.at(i)->get_voltage() << " ";
 	    cout << setw(4) << fixed << setprecision(2) << net.at(i)->get_current() << "  ";
-
 	    if (i+1 != net.size())
 	    {
 		if (net.at(i+1)->get_voltage() < 10)
@@ -48,6 +48,7 @@ void simulate(vector<Component*> net,int cycles, int writes, double time)
 	}
 	cout << endl;
     }
+    cout << endl;
 }
 
 std::string Component::get_name() const
@@ -92,18 +93,27 @@ void Battery::simulate(double time)
 }
 
 void Resistor::simulate(double time) 
-{
-    
+{   
     double temp{b.charge};
-    b.charge = (time *(get_voltage())/resistance);
-   
+    b.charge = (time * ((a.charge - b.charge)/resistance));
     a.charge = (a.charge-b.charge);
     b.charge += temp;
-     //cout << a.charge << " ";
-
 }
 
 void Capacitor::simulate(double time) 
 {
-    
+    double temp_charge{0};
+    if (a.charge >= b.charge)
+    {	
+	temp_charge = farad * ((a.charge - b.charge) - voltage) * time;   
+	b.charge += temp_charge;
+	a.charge -= temp_charge;
+    }
+    else if(a.charge < b.charge) 
+    {
+        temp_charge = farad * ((b.charge - a.charge) - voltage) * time;
+	a.charge += temp_charge;
+	b.charge -= temp_charge;
+    }
+    voltage += temp_charge;
 }
