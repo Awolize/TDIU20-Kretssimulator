@@ -2,17 +2,36 @@
 #include <vector>
 #include "Component.h"
 #include <stdlib.h>
+#include <errno.h>   // for errno
+#include <limits.h>  // for INT_MAX
 
 using namespace std;
 
 int main(int argc, char* argv[])
 {
+    int base;
+    char *endptr, *str;
+    long val;
+
     int cycles, writes, volt;
-    double iterations;
+    double time;
+
     if (argc != 5)
     {
-	throw std::invalid_argument("Invalid amount of input arguments.");
+	throw invalid_argument("Invalid console arguments.");
     }
+    for (int i{1}; i != argc; i++)
+    {
+	str = argv[i];
+	errno = 0;    /* To distinguish success/failure after call */
+	val = strtol(str, &endptr, base);
+
+	if (endptr == str)
+	{
+	    throw invalid_argument("Invalid console arguments.");
+	}
+    }
+
     cout << endl;
     cycles = atoi(argv[1]);
     cout << "Cycles: " << cycles << ", ";
@@ -20,12 +39,12 @@ int main(int argc, char* argv[])
     writes = atoi(argv[2]);
     cout << "Writes: " << writes << ", ";
 	    
-    iterations = atof(argv[3]);
-    cout << "Iterations: " << iterations << ", ";
+    time = atof(argv[3]);
+    cout << "Time: " << time << ", ";
 
     volt = atoi(argv[4]);
     cout << "Volt: " << volt << endl << endl;;
-    
+   
     Connection n, p, Q124, Q23;
     vector<Component*> net; 
     net.push_back(new Battery("Bat", volt, n, p));
@@ -34,7 +53,7 @@ int main(int argc, char* argv[])
     net.push_back(new Resistor("R3", 8.0, Q23, n));
     net.push_back(new Resistor("R4", 12.0, Q124, n));
     cout << "  Krets 1: " << endl;
-    simulate(net, cycles, writes, iterations);
+    simulate(net, cycles, writes, time);
     cout << "  ---------------------------------" << endl;
     cout << "  |    Communism will prevail!    |" << endl;
     cout << "  ---------------------------------" << endl;
@@ -49,7 +68,7 @@ int main(int argc, char* argv[])
     net.push_back(new Resistor("R4", 300.0, l, n1));
     net.push_back(new Resistor("R5", 250.0, r, n1));
     cout << "  Krets 2: " << endl;
-    simulate(net, cycles, writes, iterations);
+    simulate(net, cycles, writes, time);
     net.clear();
     cout << "  ______________________________________________________________________";
     cout << endl;
@@ -61,6 +80,6 @@ int main(int argc, char* argv[])
     net.push_back(new Resistor("R4", 300.0, l1, n2));
     net.push_back(new Capacitor("C5", 0.5, r1, n2));
     cout << "  Krets 3: " << endl;
-    simulate(net, cycles, writes, iterations);
+    simulate(net, cycles, writes, time);
     return 0;
 }
