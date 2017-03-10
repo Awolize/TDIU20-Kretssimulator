@@ -7,6 +7,15 @@
 
 using namespace std;
 
+/**
+ * Godkänt, men med kommentarer:
+ * Istället för att kasta exception och låta felet terminera programmet
+ * Hade det varit snyggare att Skriva ut felmeddelandet och sen stänga programmet
+ * med en felstatus.
+ *
+ * Component tar in const& till string, inte underklasserna. 
+ **/
+
 int main(int argc, char* argv[])
 {
     int cycles, writes, volt;
