@@ -12,13 +12,13 @@ double Component::get_voltage() const
 
 void simulate(vector<Component*> net,int cycles, int writes, double time)
 {
-    for ( int i{0}; i < net.size(); i++)
+    for ( int i{0}; i < (int)net.size(); i++)
     {
 	cout << setw(12) << setfill(' ') << net.at(i)->name;
     } 
     cout << endl;  
 
-    for ( int i{0}; i < net.size(); i++)
+    for ( int i{0}; i < (int)net.size(); i++)
     {
 	cout << setw(12) << "Volt Curr" ;
     } 
@@ -29,12 +29,12 @@ void simulate(vector<Component*> net,int cycles, int writes, double time)
 	cout << "  ";
 	for (int c{0}; c < cycles/writes; c++)
 	{
-	    for( int d{0}; d < net.size(); d++)
+	    for( int d{0}; d < (int)net.size(); d++)
 	    {
 		net.at(d)->simulate(time);
 	    }
 	}
-	for (int b{0}; b < net.size(); b++)
+	for (int b{0}; b < (int)net.size(); b++)
 	{
 	    cout << setw(5) << fixed << setprecision(2) << net.at(b)->get_voltage() << " ";
 	    cout << setw(4) << fixed << setprecision(2) << net.at(b)->get_current() << "  ";
@@ -78,7 +78,7 @@ double Battery::get_voltage() const
     return voltage;
 }
 
-void Battery::simulate(double time) 
+void Battery::simulate(double) 
 {
     a.charge = 0;
     b.charge = voltage;

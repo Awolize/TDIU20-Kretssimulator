@@ -9,26 +9,29 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-    int base;
-    char *endptr, *str;
-    long val;
-
     int cycles, writes, volt;
     double time;
 
-    if (argc != 5)
+    if (argc < 5)
     {
-	throw invalid_argument("Invalid console arguments.");
+	throw invalid_argument("Error, missing arguments.");
     }
+    else if (argc > 5)
+    {
+	throw invalid_argument("Error, too many arguments.");
+    }
+
+    char *endptr, *str;
+    long val;
+
     for (int i{1}; i != argc; i++)
     {
 	str = argv[i];
-	errno = 0;    /* To distinguish success/failure after call */
-	val = strtol(str, &endptr, base);
+	val = strtol(str, &endptr, 10);
 
 	if (endptr == str)
 	{
-	    throw invalid_argument("Invalid console arguments.");
+	    throw invalid_argument("Error, missing digit.");
 	}
     }
 
@@ -54,9 +57,7 @@ int main(int argc, char* argv[])
     net.push_back(new Resistor("R4", 12.0, Q124, n));
     cout << "  Krets 1: " << endl;
     simulate(net, cycles, writes, time);
-    cout << "  ---------------------------------" << endl;
-    cout << "  |    Communism will prevail!    |" << endl;
-    cout << "  ---------------------------------" << endl;
+
     net.clear();
     cout << "  ______________________________________________________________________";
     cout << endl;
